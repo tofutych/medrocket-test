@@ -1,6 +1,5 @@
 import os
 
-
 def create_dir_if_not_exists(required_dir: str = "tasks") -> None:
     """
     Проверяет наличие директории "tasks" в текущей директории.

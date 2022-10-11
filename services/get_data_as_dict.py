@@ -8,9 +8,8 @@ def get_data_as_dict(url: str, params: dict = {}, timeout=5) -> dict | None:
     данные, либо None, если что-то помешало корректной работе запроса.
     """
     try:
-        response = requests.get(url, params=params ,timeout=timeout)
+        response = requests.get(url, params=params, timeout=timeout)
         response.raise_for_status()
-
         return response.json()
     except requests.exceptions.HTTPError as errh:
         print(errh)
