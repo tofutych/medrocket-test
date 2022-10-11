@@ -2,16 +2,15 @@ from datetime import datetime
 import os
 from typing import List
 from .cd_to_tasks import cd_to_tasks_and_back
+from .atomic_write import atomic_write
 
 
 def write_report(user: dict, todos: List[dict]) -> None:
-    report = create_report(user, todos)
-    print(report)
     name = user.get('name')
+    report = create_report(user, todos)
     if is_file_exist(name):
         rename_file(name)
-
-    print(os.getcwd())
+    atomic_write(report, name)
 
 
 def create_report(user: dict, todos: List[dict]) -> str:
@@ -86,5 +85,6 @@ def is_file_exist(file_name: str) -> bool:
 
 
 @cd_to_tasks_and_back
-def rename_file():
-    creation_date = datetime.today().strftime("%Y-%m-%dT%H:%M:%S")
+def rename_file(name):
+    rename_date = datetime.today().strftime("%Y-%m-%dT%H:%M")
+    os.rename(f"{name}.txt", f"old_{name}_{rename_date}.txt")
