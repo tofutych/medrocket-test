@@ -1,14 +1,17 @@
 from datetime import datetime
-from get_data_as_dict import get_data_as_dict
+import os
 from typing import List
+from .cd_to_tasks import cd_to_tasks_and_back
 
 
-def write_report(report: dict) -> None:
-    pass
+def write_report(user: dict, todos: List[dict]) -> None:
+    report = create_report(user, todos)
+    print(report)
+    name = user.get('name')
+    if is_file_exist(name):
+        rename_file(name)
 
-
-user = get_data_as_dict("https://json.medrocket.ru/users/1")
-todos = get_data_as_dict("https://json.medrocket.ru/todos", {"userId": 1})
+    print(os.getcwd())
 
 
 def create_report(user: dict, todos: List[dict]) -> str:
@@ -17,11 +20,13 @@ def create_report(user: dict, todos: List[dict]) -> str:
     По полученным параметрам формируется отчет в соответствие с ТЗ.
     """
     todos_summary = get_user_todos_summary(todos)
-
-    completed_titles = get_validated_titles(todos_summary.get("completed_titles"))
-    uncompleted_titles = get_validated_titles(todos_summary.get("uncompleted_titles"))
-
-    creation_date = datetime.today().strftime("%Y-%m-%dT%H:%M:%S")
+    completed_titles = get_validated_titles(
+        todos_summary.get("completed_titles")
+    )
+    uncompleted_titles = get_validated_titles(
+        todos_summary.get("uncompleted_titles")
+    )
+    creation_date = datetime.today().strftime("%d-%m-%Y %H:%M")
 
     report = (
         f"# Отчет для {user.get('company').get('name')}.\n"
@@ -73,3 +78,13 @@ def get_validated_titles(titles: List[str]):
     titles = [validate_title(title) for title in titles]
     return "—" + "\n—".join(titles)
 
+
+@cd_to_tasks_and_back
+def is_file_exist(file_name: str) -> bool:
+    file_path = os.path.join(os.getcwd(), f"{file_name}.txt")
+    return os.path.exists(file_path)
+
+
+@cd_to_tasks_and_back
+def rename_file():
+    creation_date = datetime.today().strftime("%Y-%m-%dT%H:%M:%S")
