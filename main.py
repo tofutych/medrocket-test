@@ -9,7 +9,7 @@ if __name__ == "__main__":
     for user in users:
         user_id = user.get('id')
         todos = get_data_from_url(
-            TODOS_URL,
-            {"userId": user_id}
+            url=TODOS_URL,
+            params={"userId": user_id}
         )
         write_report(user, todos)
