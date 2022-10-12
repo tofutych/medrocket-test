@@ -34,7 +34,7 @@ def create_report(user: dict, todos: List[dict]) -> str:
     uncompleted_titles = get_validated_titles(
         todos_summary.get("uncompleted_titles")
     )
-    creation_date = datetime.today().strftime("%d-%m-%Y %H:%M")
+    creation_date = datetime.today().strftime("%d.%m.%Y %H:%M")
 
     report = (
         f"# Отчет для {user.get('company').get('name')}.\n"
