@@ -1,6 +1,5 @@
-from services import create_dir_if_not_exists, get_data_from_url, write_report
-from services import TODOS_URL, USERS_URL
-
+from services import (TODOS_URL, USERS_URL, create_dir_if_not_exists,
+                      get_data_from_url, write_report)
 
 if __name__ == "__main__":
     create_dir_if_not_exists()

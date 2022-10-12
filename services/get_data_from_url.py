@@ -1,5 +1,6 @@
-import requests
 from typing import List
+
+import requests
 
 
 def get_data_from_url(url: str, params: dict = {}, timeout=5) -> List[dict] | None:

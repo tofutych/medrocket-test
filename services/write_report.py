@@ -1,8 +1,9 @@
-from datetime import datetime
 import os
+from datetime import datetime
 from typing import List
-from .cd_to_tasks_and_back import cd_to_tasks_and_back
+
 from .atomic_write import atomic_write
+from .cd_to_tasks_and_back import cd_to_tasks_and_back
 
 
 def write_report(user: dict, todos: List[dict]) -> None:
