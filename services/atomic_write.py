@@ -1,6 +1,6 @@
 import os
 import tempfile
-from .cd_to_tasks import cd_to_tasks_and_back
+from .cd_to_tasks_and_back import cd_to_tasks_and_back
 
 
 @cd_to_tasks_and_back

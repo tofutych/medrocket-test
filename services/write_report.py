@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 from typing import List
-from .cd_to_tasks import cd_to_tasks_and_back
+from .cd_to_tasks_and_back import cd_to_tasks_and_back
 from .atomic_write import atomic_write
 
 
