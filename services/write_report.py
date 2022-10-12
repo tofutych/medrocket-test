@@ -94,7 +94,7 @@ def get_validated_titles(titles: List[str]) -> str:
     title начинается с новой строки и тире.
     """
     titles = [validate_title(title) for title in titles]
-    return "—" + "\n—".join(titles)
+    return "— " + "\n— ".join(titles)
 
 
 @cd_to_tasks_and_back
