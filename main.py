@@ -12,4 +12,5 @@ if __name__ == "__main__":
             url=TODOS_URL,
             params={"userId": user_id}
         )
-        write_report(user, todos)
+        if todos:
+            write_report(user, todos)
