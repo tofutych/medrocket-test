@@ -1,8 +1,8 @@
-import http
 import requests
 from typing import List
 
-def get_data_from_url(url: str, params: dict = {}, timeout=5) -> List[dict]:
+
+def get_data_from_url(url: str, params: dict = {}, timeout=5) -> List[dict] | None:
     """
     Функция отправляет GET запрос c параметрами params
     на переданный url в формате str и возвращает
