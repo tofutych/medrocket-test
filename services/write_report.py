@@ -6,17 +6,26 @@ from .atomic_write import atomic_write
 
 
 def write_report(user: dict, todos: List[dict]) -> None:
+    """
+    Функция принимает пользователя user и список todos.
+    Затем формируется отчет.
+    Потом проверяется существование отчета для user.
+    Если отчет уже был создан, то название старого отчета меняется.
+    В конце идет запись отчета в файл.
+    """
     name = user.get('name')
     report = create_report(user, todos)
+
     if is_file_exist(name):
         rename_file(name)
+
     atomic_write(report, name)
 
 
 def create_report(user: dict, todos: List[dict]) -> str:
     """
-    Принимает dict user и List[dict] todos и возвращает str report.
-    По полученным параметрам формируется отчет в соответствие с ТЗ.
+    Функиця принимает пользователя user и todos.
+    По полученным данным формируется и возвращается отчет.
     """
     todos_summary = get_user_todos_summary(todos)
     completed_titles = get_validated_titles(
@@ -43,9 +52,9 @@ def create_report(user: dict, todos: List[dict]) -> str:
 
 def get_user_todos_summary(todos: List[dict]) -> dict:
     """
-    Принимает List[dict] todos и возращает dict summary.
-    Проверяя каждый todo, формируется summary, хранящий общую статистику
-    юзера.
+    Функция принимает список туду todos.
+    Проверяя каждый todo, формируется summary, хранящий общую
+    статистику о юзере.
     """
     summary = {
         "total": 0,
@@ -68,23 +77,41 @@ def get_user_todos_summary(todos: List[dict]) -> dict:
 
 
 def validate_title(title: str) -> str:
+    """
+    Функция проверяет длину title.
+    Если длина больше 46, то title изменяется.
+    """
     if len(title) > 46:
         return title[:46] + "…"
     return title
 
 
-def get_validated_titles(titles: List[str]):
+def get_validated_titles(titles: List[str]) -> str:
+    """
+    Функция получает список titles.
+    Далее идет валидация каждого title.
+    В конце возвращаем строку, где каждый
+    title начинается с новой строки и тире.
+    """
     titles = [validate_title(title) for title in titles]
     return "—" + "\n—".join(titles)
 
 
 @cd_to_tasks_and_back
 def is_file_exist(file_name: str) -> bool:
+    """
+    Проверяем наличие файла с именем file_name
+    в директории tasks.
+    """
     file_path = os.path.join(os.getcwd(), f"{file_name}.txt")
     return os.path.exists(file_path)
 
 
 @cd_to_tasks_and_back
-def rename_file(name):
+def rename_file(name: str) -> None:
+    """
+    Изменяем имя файла в формат
+    old_<name>_<Y-m-dTH:M>
+    """
     rename_date = datetime.today().strftime("%Y-%m-%dT%H:%M")
     os.rename(f"{name}.txt", f"old_{name}_{rename_date}.txt")
