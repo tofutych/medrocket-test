@@ -9,6 +9,7 @@ import requests
 def main():
     if "tasks" not in os.listdir():
         os.mkdir("tasks")
+    os.chdir("tasks")
 
     users_endpoint = "https://json.medrocket.ru/users"
     todos_endpoint = "https://json.medrocket.ru/todos"
@@ -124,23 +125,6 @@ def get_validated_titles(titles: List[str]) -> str:
     return "— " + "\n— ".join(titles)
 
 
-def cd_to_tasks_and_back(func):
-    """
-    Декоратор позволяет нам во время выполнения
-    функции сменить рабочую директорию на ./tasks,
-    а затем вернуться обратно.
-    """
-
-    def wrapper(*args, **kwargs):
-        os.chdir("tasks")
-        res = func(*args, **kwargs)
-        os.chdir("..")
-        return res
-
-    return wrapper
-
-
-@cd_to_tasks_and_back
 def is_file_exist(file_name: str) -> bool:
     """
     Проверяем наличие файла с именем file_name
@@ -150,7 +134,6 @@ def is_file_exist(file_name: str) -> bool:
     return os.path.exists(file_path)
 
 
-@cd_to_tasks_and_back
 def rename_file(name: str) -> None:
     """
     Изменяет имя файла в формат
@@ -160,7 +143,6 @@ def rename_file(name: str) -> None:
     os.rename(f"{name}.txt", f"old_{name}_{rename_date}.txt")
 
 
-@cd_to_tasks_and_back
 def atomic_write(content: str, name: str, extension: str = ".txt") -> None:
     """
     Функция безопасно записывает данные в файл,
