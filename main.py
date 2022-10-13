@@ -162,7 +162,7 @@ def atomic_write(content: str, name: str, extension: str = ".txt") -> None:
         try:
             os.unlink(temp_file.name)
         except FileNotFoundError as e:
-            print("File not found")
+            print("File not found", e)
 
 
 if __name__ == "__main__":
